@@ -1,0 +1,133 @@
+.skillsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: var(--spacing-xl);
+}
+
+.skillCategory {
+  background: var(--gradient-card);
+  padding: var(--spacing-xl);
+  border-radius: var(--border-radius-lg);
+  border-top: 5px solid var(--primary-color);
+  transition: all var(--transition-normal);
+}
+
+.skillCategory:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 40px rgba(102, 126, 234, 0.15);
+}
+
+.skillCategory h4 {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-lg);
+  font-size: 1.2em;
+  font-weight: 600;
+}
+
+.skillCategory h4 i {
+  color: var(--primary-color);
+  font-size: 1.1em;
+}
+
+.technicalSkills {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.skillItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--spacing-sm) 0;
+  border-bottom: 1px solid rgba(102, 126, 234, 0.1);
+}
+
+.skillInfo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+}
+
+.skillInfo i {
+  color: var(--primary-color);
+  width: 20px;
+  font-size: 1.1em;
+}
+
+.skillInfo span {
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.skillBar {
+  width: 100px;
+  height: 8px;
+  background: rgba(102, 126, 234, 0.2);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-left: var(--spacing-md);
+}
+
+.skillProgress {
+  height: 100%;
+  background: var(--gradient-skill);
+  border-radius: 4px;
+  animation: progressFill 2s ease-out;
+  transition: width var(--transition-normal);
+}
+
+@keyframes progressFill {
+  from { width: 0 !important; }
+}
+
+.skillList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.skillList li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: var(--spacing-sm) 0;
+  color: #555;
+  transition: all var(--transition-normal);
+  border-radius: var(--border-radius-sm);
+  padding-left: var(--spacing-md);
+  margin-bottom: 5px;
+}
+
+.skillList li:hover {
+  background: rgba(102, 126, 234, 0.1);
+  transform: translateX(10px);
+  color: var(--text-primary);
+}
+
+.skillList li i {
+  color: var(--success);
+  width: 20px;
+  font-size: 1.1em;
+}
+
+@media (max-width: 768px) {
+  .skillsGrid {
+    grid-template-columns: 1fr;
+  }
+  
+  .skillItem {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--spacing-sm);
+  }
+  
+  .skillBar {
+    width: 100%;
+    margin-left: 0;
+  }
+}
