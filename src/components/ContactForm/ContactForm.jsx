@@ -1,7 +1,152 @@
-import React, { useState } from 'react';
-import { formFields } from '../../data/portfolioData';
-import { validateForm, createEmailContent, openEmailClient } from '../../utils/helpers';
+import React, { useState, useEffect } from 'react';
 import styles from './ContactForm.module.css';
+
+// Configuração dos campos do formulário
+const formFields = {
+  nome: {
+    label: 'Nome Completo',
+    type: 'text',
+    required: true
+  },
+  email: {
+    label: 'E-mail',
+    type: 'email',
+    required: true
+  },
+  empresa: {
+    label: 'Empresa',
+    type: 'text',
+    required: false
+  },
+  cargo: {
+    label: 'Cargo',
+    type: 'text',
+    required: false
+  },
+  telefone: {
+    label: 'Telefone',
+    type: 'tel',
+    required: false
+  },
+  interesse: {
+    label: 'Tipo de Interesse',
+    type: 'select',
+    required: true,
+    options: [
+      { value: '', label: 'Selecione uma opção' },
+      { value: 'contratacao', label: 'Oportunidade de Trabalho' },
+      { value: 'freelance', label: 'Projeto Freelance' },
+      { value: 'consultoria', label: 'Consultoria' },
+      { value: 'parceria', label: 'Parceria' },
+      { value: 'outro', label: 'Outro' }
+    ]
+  },
+  urgencia: {
+    label: 'Urgência',
+    type: 'select',
+    required: false,
+    options: [
+      { value: 'baixa', label: 'Baixa - Sem pressa' },
+      { value: 'normal', label: 'Normal - Algumas semanas' },
+      { value: 'alta', label: 'Alta - Alguns dias' },
+      { value: 'urgente', label: 'Urgente - Imediato' }
+    ]
+  },
+  mensagem: {
+    label: 'Mensagem',
+    type: 'textarea',
+    required: true
+  }
+};
+
+// Função para validar o formulário
+const validateForm = (formData, requiredFields) => {
+  const errors = {};
+  let isValid = true;
+
+  // Validar campos obrigatórios
+  requiredFields.forEach(field => {
+    if (!formData[field] || formData[field].trim() === '') {
+      errors[field] = `${formFields[field].label} é obrigatório`;
+      isValid = false;
+    }
+  });
+
+  // Validar formato do e-mail
+  if (formData.email && !isValidEmail(formData.email)) {
+    errors.email = 'E-mail inválido';
+    isValid = false;
+  }
+
+  // Validar telefone se fornecido
+  if (formData.telefone && !isValidPhone(formData.telefone)) {
+    errors.telefone = 'Telefone inválido';
+    isValid = false;
+  }
+
+  return { isValid, errors };
+};
+
+// Função para validar e-mail
+const isValidEmail = (email) => {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email);
+};
+
+// Função para validar telefone
+const isValidPhone = (phone) => {
+  const phoneRegex = /^\(\d{2}\)\s\d{4,5}-\d{4}$|^\d{10,11}$/;
+  return phoneRegex.test(phone.replace(/\D/g, ''));
+};
+
+// Função para criar conteúdo do e-mail
+const createEmailContent = (formData) => {
+  const emailSubject = `Novo Contato - Portfolio: ${formData.nome}`;
+  const emailBody = `
+NOVO CONTATO ATRAVÉS DO PORTFÓLIO
+=================================
+
+👤 INFORMAÇÕES PESSOAIS:
+• Nome: ${formData.nome}
+• E-mail: ${formData.email}
+• Telefone: ${formData.telefone || 'Não informado'}
+
+🏢 INFORMAÇÕES PROFISSIONAIS:
+• Empresa: ${formData.empresa || 'Não informado'}
+• Cargo: ${formData.cargo || 'Não informado'}
+
+💼 DETALHES DO INTERESSE:
+• Tipo de Interesse: ${getInterestLabel(formData.interesse)}
+• Urgência: ${getUrgencyLabel(formData.urgencia)}
+
+📝 MENSAGEM:
+${formData.mensagem}
+
+=================================
+Data: ${new Date().toLocaleString('pt-BR')}
+Enviado através do formulário de contato do portfólio
+  `;
+
+  return { emailSubject, emailBody };
+};
+
+// Função para obter label do interesse
+const getInterestLabel = (value) => {
+  const option = formFields.interesse.options.find(opt => opt.value === value);
+  return option ? option.label : value;
+};
+
+// Função para obter label da urgência
+const getUrgencyLabel = (value) => {
+  const option = formFields.urgencia.options.find(opt => opt.value === value);
+  return option ? option.label : value;
+};
+
+// Função para abrir cliente de e-mail
+const openEmailClient = (subject, body) => {
+  const mailtoLink = `mailto:miury4529@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  window.open(mailtoLink, '_blank');
+};
 
 const ContactForm = ({ onClose }) => {
   const [formData, setFormData] = useState({
@@ -19,11 +164,38 @@ const ContactForm = ({ onClose }) => {
   const [submitStatus, setSubmitStatus] = useState('');
   const [errors, setErrors] = useState({});
 
+  // Fechar formulário com ESC
+  useEffect(() => {
+    const handleEscKey = (e) => {
+      if (e.key === 'Escape') {
+        onClose();
+      }
+    };
+
+    document.addEventListener('keydown', handleEscKey);
+    return () => document.removeEventListener('keydown', handleEscKey);
+  }, [onClose]);
+
+  // Focar no primeiro campo quando o formulário abrir
+  useEffect(() => {
+    const firstInput = document.querySelector('input[name="nome"]');
+    if (firstInput) {
+      setTimeout(() => firstInput.focus(), 100);
+    }
+  }, []);
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
+    
+    // Formatação especial para telefone
+    let formattedValue = value;
+    if (name === 'telefone') {
+      formattedValue = formatPhone(value);
+    }
+    
     setFormData(prev => ({
       ...prev,
-      [name]: value
+      [name]: formattedValue
     }));
     
     // Limpar erro do campo quando usuário começar a digitar
@@ -32,6 +204,16 @@ const ContactForm = ({ onClose }) => {
         ...prev,
         [name]: ''
       }));
+    }
+  };
+
+  // Função para formatar telefone
+  const formatPhone = (value) => {
+    const numbers = value.replace(/\D/g, '');
+    if (numbers.length <= 10) {
+      return numbers.replace(/(\d{2})(\d{4})(\d{4})/, '($1) $2-$3');
+    } else {
+      return numbers.replace(/(\d{2})(\d{5})(\d{4})/, '($1) $2-$3');
     }
   };
 
@@ -76,10 +258,11 @@ const ContactForm = ({ onClose }) => {
         });
         setSubmitStatus('');
         onClose();
-      }, 2000);
+      }, 2500);
       
     } catch (error) {
       setSubmitStatus('error');
+      console.error('Erro ao processar formulário:', error);
     } finally {
       setIsSubmitting(false);
     }
@@ -105,6 +288,7 @@ const ContactForm = ({ onClose }) => {
             className={hasError ? styles.error : ''}
             placeholder={`Digite ${label.toLowerCase()}...`}
             rows={4}
+            disabled={isSubmitting}
           />
         ) : type === 'select' ? (
           <select
@@ -113,6 +297,7 @@ const ContactForm = ({ onClose }) => {
             value={value}
             onChange={handleInputChange}
             className={hasError ? styles.error : ''}
+            disabled={isSubmitting}
           >
             {options.map(option => (
               <option key={option.value} value={option.value}>
@@ -129,11 +314,15 @@ const ContactForm = ({ onClose }) => {
             onChange={handleInputChange}
             className={hasError ? styles.error : ''}
             placeholder={`Digite ${label.toLowerCase()}...`}
+            disabled={isSubmitting}
+            autoComplete={fieldName === 'email' ? 'email' : fieldName === 'telefone' ? 'tel' : 'off'}
           />
         )}
         
         {hasError && (
-          <span className={styles.errorMessage}>{hasError}</span>
+          <span className={styles.errorMessage}>
+            <i className="fas fa-exclamation-circle"></i> {hasError}
+          </span>
         )}
       </div>
     );
@@ -142,7 +331,12 @@ const ContactForm = ({ onClose }) => {
   return (
     <div className={styles.contactFormOverlay} onClick={onClose}>
       <div className={styles.contactForm} onClick={(e) => e.stopPropagation()}>
-        <button className={styles.closeForm} onClick={onClose}>
+        <button 
+          className={styles.closeForm} 
+          onClick={onClose}
+          type="button"
+          aria-label="Fechar formulário"
+        >
           <i className="fas fa-times"></i>
         </button>
         
@@ -172,7 +366,7 @@ const ContactForm = ({ onClose }) => {
           </div>
         )}
 
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} noValidate>
           <div className={styles.formGrid}>
             {renderField('nome', formFields.nome)}
             {renderField('email', formFields.email)}

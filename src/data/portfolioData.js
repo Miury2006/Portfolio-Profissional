@@ -9,12 +9,12 @@ export const personalInfo = {
 export const skills = {
   technical: [
     { name: 'HTML5', icon: 'fab fa-html5', level: 85 },
-    { name: 'CSS3', icon: 'fab fa-css3-alt', level: 80 },
-    { name: 'JavaScript', icon: 'fab fa-js-square', level: 75 },
+    { name: 'CSS3', icon: 'fab fa-css3-alt', level: 65 },
+    { name: 'JavaScript', icon: 'fab fa-js-square', level: 55 },
     { name: 'React', icon: 'fab fa-react', level: 70 },
     { name: 'Git & GitHub', icon: 'fab fa-git-alt', level: 75 },
-    { name: 'VS Code', icon: 'fas fa-code', level: 90 },
-    { name: 'Figma', icon: 'fab fa-figma', level: 65 },
+    { name: 'VS Code', icon: 'fas fa-code', level: 80 },
+    { name: 'Figma', icon: 'fab fa-figma', level: 25 },
     { name: 'Office', icon: 'fab fa-microsoft', level: 80 }
   ],
   personal: [
@@ -33,9 +33,9 @@ export const educationData = [
   {
     id: 1,
     title: "Ensino Médio Completo",
-    institution: "Colégio Estadual",
-    period: "2018 - 2020",
-    description: "Formação básica com foco em exatas",
+    institution: "EEMTI - Antonieta Siqueira",
+    period: "2022 - 2024",
+    description: "Formação básica",
     icon: "fas fa-graduation-cap"
   }
 ];
@@ -43,9 +43,9 @@ export const educationData = [
 export const coursesData = [
   {
     id: 1,
-    title: "Desenvolvimento Web",
-    institution: "Curso Online",
-    period: "2023 - 2024",
+    title: "Desenvolvedor Web - FrontEnd Junior",
+    institution: "Digital College",
+    period: "2025 - 2025",
     description: "HTML, CSS, JavaScript e React",
     icon: "fas fa-code",
     technologies: ["HTML5", "CSS3", "JavaScript", "React"]
@@ -62,9 +62,9 @@ export const projectsData = [
   },
   {
     id: 2,
-    title: "Landing Page",
-    description: "Página de apresentação para empresa",
-    technologies: ["HTML5", "CSS3", "JavaScript"],
+    title: "Drip Store",
+    description: "Loja Virtual desenvovido com React",
+    technologies: ["HTML5", "CSS3", "JavaScript", "React"],
     icon: "fas fa-paint-brush"
   }
 ];
