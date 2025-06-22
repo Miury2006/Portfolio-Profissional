@@ -1,0 +1,207 @@
+.portfolioContainer {
+  min-height: 100vh;
+  background: var(--gradient-primary);
+  background-size: 400% 400%;
+  animation: gradientShift 15s ease infinite;
+  position: relative;
+}
+
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.container {
+  max-width: 1000px;
+  margin: 0 auto;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  border-radius: var(--border-radius-xl);
+  box-shadow: var(--shadow-xl);
+  overflow: hidden;
+  animation: slideUp 1s ease-out;
+  position: relative;
+  z-index: 2;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.mainContent {
+  padding: var(--spacing-xxl);
+}
+
+.section {
+  margin-bottom: 40px;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: sectionSlide 0.8s ease-out both;
+}
+
+.section:nth-child(1) { animation-delay: 0.2s; }
+.section:nth-child(2) { animation-delay: 0.4s; }
+.section:nth-child(3) { animation-delay: 0.6s; }
+.section:nth-child(4) { animation-delay: 0.8s; }
+.section:nth-child(5) { animation-delay: 1s; }
+.section:nth-child(6) { animation-delay: 1.2s; }
+
+@keyframes sectionSlide {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.objective {
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+  padding: var(--spacing-xl);
+  border-radius: var(--border-radius-lg);
+  border-left: 6px solid var(--primary-color);
+  font-size: 1.1em;
+  line-height: 1.8;
+  position: relative;
+  overflow: hidden;
+}
+
+.educationItem, .courseItem, .projectItem {
+  background: var(--gradient-card);
+  padding: var(--spacing-lg);
+  border-radius: var(--border-radius-lg);
+  margin-bottom: var(--spacing-lg);
+  border-left: 5px solid var(--primary-color);
+  transition: all var(--transition-bounce);
+  position: relative;
+  overflow: hidden;
+}
+
+.educationItem:hover, .courseItem:hover, .projectItem:hover {
+  transform: translateY(-5px) scale(1.02);
+  box-shadow: 0 15px 40px rgba(102, 126, 234, 0.2);
+  border-left-color: var(--secondary-color);
+}
+
+.itemHeader {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-sm);
+}
+
+.itemIcon {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: var(--gradient-skill);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--white);
+  font-size: 1.2em;
+}
+
+.itemTitle {
+  font-weight: 600;
+  color: var(--text-primary);
+  font-size: 1.2em;
+}
+
+.itemSubtitle {
+  color: var(--text-secondary);
+  font-size: 1em;
+}
+
+.itemDetails {
+  margin-left: 65px;
+  color: #555;
+}
+
+.techBadges {
+  margin-top: var(--spacing-sm);
+}
+
+.techBadge {
+  display: inline-block;
+  background: var(--gradient-skill);
+  color: var(--white);
+  padding: 5px 12px;
+  border-radius: var(--border-radius-lg);
+  font-size: 0.8em;
+  margin: 5px 5px 0 0;
+  animation: badgeFloat 3s ease-in-out infinite;
+}
+
+@keyframes badgeFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
+}
+
+.projectsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: var(--spacing-lg);
+}
+
+.achievement {
+  background: linear-gradient(135deg, var(--warning) 0%, #e67e22 100%);
+  color: var(--white);
+  padding: var(--spacing-xl);
+  border-radius: var(--border-radius-lg);
+  text-align: center;
+  font-weight: 600;
+  position: relative;
+  overflow: hidden;
+  animation: achievementGlow 3s ease-in-out infinite;
+}
+
+@keyframes achievementGlow {
+  0%, 100% { box-shadow: 0 10px 30px rgba(243, 156, 18, 0.3); }
+  50% { box-shadow: 0 15px 40px rgba(243, 156, 18, 0.5); }
+}
+
+.achievement i {
+  font-size: 3em;
+  margin-bottom: var(--spacing-md);
+  display: block;
+  animation: medalSpin 4s linear infinite;
+}
+
+@keyframes medalSpin {
+  0% { transform: rotateY(0deg); }
+  100% { transform: rotateY(360deg); }
+}
+
+.achievement h3 {
+  margin-bottom: var(--spacing-sm);
+  font-size: 1.5em;
+}
+
+@media (max-width: 768px) {
+  .container {
+    margin: 10px;
+    border-radius: var(--border-radius-md);
+  }
+
+  .mainContent {
+    padding: 40px 25px;
+  }
+
+  .projectsGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .itemDetails {
+    margin-left: 0;
+    margin-top: var(--spacing-md);
+  }
+}

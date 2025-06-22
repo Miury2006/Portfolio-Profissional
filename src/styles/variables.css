@@ -1,0 +1,49 @@
+:root {
+  /* Colors */
+  --primary-color: #667eea;
+  --secondary-color: #764ba2;
+  --accent-color: #f093fb;
+  --accent-secondary: #f5576c;
+  --text-primary: #2c3e50;
+  --text-secondary: #7f8c8d;
+  --background-light: #f8f9fa;
+  --background-secondary: #e9ecef;
+  --white: #ffffff;
+  --success: #28a745;
+  --error: #dc3545;
+  --warning: #f39c12;
+  
+  /* Gradients */
+  --gradient-primary: linear-gradient(-45deg, #667eea, #764ba2, #f093fb, #f5576c);
+  --gradient-header: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+  --gradient-button: linear-gradient(45deg, #f093fb, #f5576c);
+  --gradient-card: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  --gradient-skill: linear-gradient(90deg, #667eea, #764ba2);
+  
+  /* Spacing */
+  --spacing-xs: 5px;
+  --spacing-sm: 10px;
+  --spacing-md: 15px;
+  --spacing-lg: 20px;
+  --spacing-xl: 30px;
+  --spacing-xxl: 50px;
+  
+  /* Border Radius */
+  --border-radius-sm: 10px;
+  --border-radius-md: 15px;
+  --border-radius-lg: 20px;
+  --border-radius-xl: 25px;
+  --border-radius-full: 50px;
+  
+  /* Shadows */
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 8px 25px rgba(0, 0, 0, 0.15);
+  --shadow-lg: 0 15px 40px rgba(0, 0, 0, 0.2);
+  --shadow-xl: 0 30px 60px rgba(0, 0, 0, 0.3);
+  
+  /* Transitions */
+  --transition-fast: 0.2s ease;
+  --transition-normal: 0.3s ease;
+  --transition-slow: 0.4s ease;
+  --transition-bounce: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
